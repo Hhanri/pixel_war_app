@@ -45,6 +45,7 @@ class _PixelGridWidgetState extends State<PixelGridWidget> {
   void initState() {
     super.initState();
     transformationController.addListener(onChangeTransformation);
+    transformationController.value.scale(2.5);
   }
 
   @override
@@ -56,15 +57,15 @@ class _PixelGridWidgetState extends State<PixelGridWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveViewer.builder(
-      minScale: .01,//cellHeight / MediaQuery.of(context).size.height,
-      maxScale: 5,
-      scaleEnabled: true,
-      transformationController: transformationController,
-      builder: (BuildContext context, vector.Quad viewport) {
-        return Container(
-          constraints: const BoxConstraints.tightForFinite(),
-          child: Column(
+    return Center(
+      child: InteractiveViewer.builder(
+        minScale: 1.5,//cellHeight / MediaQuery.of(context).size.height,
+        maxScale: 5,
+        scaleEnabled: true,
+        boundaryMargin: const EdgeInsets.all(5),
+        transformationController: transformationController,
+        builder: (BuildContext context, vector.Quad viewport) {
+          return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -86,9 +87,9 @@ class _PixelGridWidgetState extends State<PixelGridWidget> {
                   ],
                 )
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
