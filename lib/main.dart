@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pixel_war_app/helpers/supabase_keys.dart';
 import 'package:pixel_war_app/screens/home_page.dart';
 
-void main() {
+void main() async {
+  await initializeSupabase();
   runApp(const MyApp());
 }
 
