@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pixel_war_app/models/pixel_model.dart';
+import 'package:pixel_war_app/widgets/pixel_widget.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
-import 'helpers.dart';
+import 'helpers/helpers.dart';
 
 class PixelGridWidget extends StatefulWidget {
   const PixelGridWidget({Key? key}) : super(key: key);
@@ -94,54 +96,4 @@ class _PixelGridWidgetState extends State<PixelGridWidget> {
   }
 }
 
-final gridTest = [
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-  [PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel,PixelModel.greenPixel, PixelModel.bluePixel, PixelModel.redPixel],
-];
 
-class PixelModel {
-  final Color color;
-  final String username;
-
-  PixelModel({required this.color, required this.username});
-  static PixelModel greenPixel = PixelModel(color: Colors.green, username: '');
-  static PixelModel redPixel = PixelModel(color: Colors.red, username: '');
-  static PixelModel bluePixel = PixelModel(color: Colors.blue, username: '');
-}
-
-class PixelWidget extends StatelessWidget {
-  final PixelModel pixelModel;
-  final VoidCallback onTap;
-  const PixelWidget({
-    Key? key,
-    required this.pixelModel,
-    required this.onTap
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 20,
-        width: 20,
-        color: pixelModel.color,
-      ),
-    );
-  }
-}

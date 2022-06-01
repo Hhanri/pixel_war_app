@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pixel_war_app/home_page.dart';
+import 'package:pixel_war_app/screens/home_page.dart';
 
 void main() {
   runApp(const MyApp());
