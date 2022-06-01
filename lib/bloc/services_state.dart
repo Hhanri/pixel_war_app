@@ -5,6 +5,8 @@ abstract class ServicesState {}
 
 class ServicesInitial extends ServicesState {}
 
-class NoInternetState extends ServicesState{}
+class NoInternetState extends ServicesState {}
 
-class YesInternetState extends ServicesState{}
+class SignedInState extends ServicesState {}
+
+class SignedOutState extends ServicesState {}

@@ -1,23 +1,37 @@
-import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/services/connectivity_service.dart';
+import 'package:pixel_war_app/services/supabase_service.dart';
 
 part 'services_event.dart';
 part 'services_state.dart';
 
 class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
   final ConnectivityService connectivityService = ConnectivityService();
-  ServicesBloc() : super(YesInternetState()) {
+  final SupabaseService supabaseService = SupabaseService();
+  ServicesBloc() : super(ServicesInitial()) {
 
     on<NoInternetEvent>((event, emit) {
       emit(NoInternetState());
     });
 
-    on<YesInternetEvent>((event, emit) {
-      emit(YesInternetState());
+    on<SignInEvent>((event, emit) {
+      if (supabaseService.checkAuthentication()) {
+        emit(SignedInState());
+      } else {
+        supabaseService.signIn(email: event.email!, password: event.password!);
+      }
+    });
+
+    on<SignUpEvent>((event, emit) {
+      supabaseService.signUp(email: event.email, password: event.password);
+      emit(SignedOutState());
+    });
+
+    on<SignOutEvent>((event, emit) {
+      supabaseService.signOut();
+      emit(SignedOutState());
     });
 
     connectivityService.connectivityStream.stream.listen((event) {
@@ -27,5 +41,11 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         add(YesInternetEvent());
       }
     });
+
+    if (supabaseService.checkAuthentication()) {
+      add(SignInEvent());
+    } else {
+      add(SignOutEvent());
+    }
   }
 }
