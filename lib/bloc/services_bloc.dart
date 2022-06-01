@@ -16,6 +16,14 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       emit(NoInternetState());
     });
 
+    on<YesInternetEvent>((event, emit) {
+      if (supabaseService.checkAuthentication()) {
+        add(SignInEvent());
+      } else {
+        add(SignOutEvent());
+      }
+    });
+
     on<SignInEvent>((event, emit) {
       if (supabaseService.checkAuthentication()) {
         emit(SignedInState());
@@ -42,10 +50,5 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       }
     });
 
-    if (supabaseService.checkAuthentication()) {
-      add(SignInEvent());
-    } else {
-      add(SignOutEvent());
-    }
   }
 }
