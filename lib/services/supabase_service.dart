@@ -27,15 +27,16 @@ class SupabaseService {
     if (error == null) {
       return true;
     }
+    print(error.message);
     return false;
   }
 
   bool checkAuthentication() {
     final Session? response = supabaseInstance.auth.session();
     if (response == null) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 
 }
