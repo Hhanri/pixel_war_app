@@ -14,6 +14,7 @@ class TextFormFieldWidget extends StatelessWidget {
       validator: (value) {
         return parameters.validator(value);
       },
+      obscureText: parameters.obscureText,
       decoration: InputDecoration(
         label: Text(parameters.label),
         hintText: parameters.hint,
@@ -70,12 +71,10 @@ class EmailParameters extends TextFormFieldParameters {
 class PasswordParameters extends TextFormFieldParameters {
   PasswordParameters({
     required TextEditingController controller,
-    required String label,
-    required String hint,
   }) : super(
-    label: label,
-    hint: hint,
-    obscureText: false,
+    label: "Password",
+    hint: "your password",
+    obscureText: true,
     validator: (value) {
       if (value!.length < 6) {
         return "Password's length needs to be at least 6";
@@ -90,12 +89,10 @@ class PasswordConfirmationParameters extends TextFormFieldParameters {
   PasswordConfirmationParameters({
     required TextEditingController controller1,
     required TextEditingController controller2,
-    required String label,
-    required String hint,
   }) : super(
-      label: label,
-      hint: hint,
-      obscureText: false,
+      label: "Password Confirmation",
+      hint: "same password",
+      obscureText: true,
       validator: (value) {
         if (value!.length < 6) {
           return "Password's length needs to be at least 6";

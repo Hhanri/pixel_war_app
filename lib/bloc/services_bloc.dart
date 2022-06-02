@@ -25,11 +25,10 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
     });
 
     on<SignInEvent>((event, emit) {
-      if (supabaseService.checkAuthentication()) {
-        emit(SignedInState());
-      } else {
+      if (!supabaseService.checkAuthentication()) {
         supabaseService.signIn(email: event.email!, password: event.password!);
       }
+      emit(SignedInState());
     });
 
     on<SignUpEvent>((event, emit) {

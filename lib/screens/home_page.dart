@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/screens/no_internet_page.dart';
+import 'package:pixel_war_app/screens/sign_in_page.dart';
 import 'package:pixel_war_app/screens/sign_up_page.dart';
 import 'package:pixel_war_app/widgets/pixel_grid_widget.dart';
 
@@ -20,7 +21,7 @@ class HomePage extends StatelessWidget {
               return const NoInternetScreen();
             }
             if (state is SignedOutState) {
-              return const SignUpScreen();
+              return const SignInScreen();
             }
             return PixelGridWidget(parentContext: context);
           },
