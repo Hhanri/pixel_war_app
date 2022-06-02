@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pixel_war_app/bloc/services_bloc.dart';
+import 'package:pixel_war_app/helpers/app_router.dart';
 import 'package:pixel_war_app/helpers/supabase_keys.dart';
-import 'package:pixel_war_app/screens/home_page.dart';
 
 void main() async {
   await initializeSupabase();
@@ -12,13 +14,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    final AppRouter appRouter = AppRouter();
+    return BlocProvider<ServicesBloc>(
+      create: (context) => ServicesBloc(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        themeMode: ThemeMode.dark,
+        onGenerateRoute: appRouter.onGenerate,
+        initialRoute: AppRouter.signInRoute,
       ),
-      themeMode: ThemeMode.dark,
-      home: const HomePage(),
     );
   }
 }
