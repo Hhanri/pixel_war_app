@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pixel_war_app/helpers/extensions.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
@@ -31,6 +32,7 @@ class TextFormFieldWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)
         )
       ),
+      inputFormatters: parameters.inputFormatters,
     );
   }
 }
@@ -41,13 +43,14 @@ class TextFormFieldParameters {
   final String hint;
   final String? Function(String?) validator;
   final bool obscureText;
-
+  List<TextInputFormatter>? inputFormatters;
   TextFormFieldParameters({
     required this.controller,
     required this.label,
     required this.hint,
     required this.validator,
-    required this.obscureText
+    required this.obscureText,
+    this.inputFormatters
   });
 }
 
@@ -64,7 +67,11 @@ class EmailParameters extends TextFormFieldParameters {
       }
       return null;
     },
-    controller: controller
+    controller: controller,
+    inputFormatters: [
+      FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+      FilteringTextInputFormatter.singleLineFormatter
+    ]
   );
 }
 
@@ -81,7 +88,10 @@ class PasswordParameters extends TextFormFieldParameters {
       }
       return null;
     },
-    controller: controller
+    controller: controller,
+    inputFormatters: [
+      FilteringTextInputFormatter.singleLineFormatter
+    ]
   );
 }
 
@@ -101,6 +111,9 @@ class PasswordConfirmationParameters extends TextFormFieldParameters {
         }
         return null;
       },
-      controller: controller1
+      controller: controller1,
+      inputFormatters: [
+        FilteringTextInputFormatter.singleLineFormatter
+      ]
   );
 }
