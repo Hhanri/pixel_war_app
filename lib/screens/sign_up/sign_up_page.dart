@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
+import 'package:pixel_war_app/screens/loading_page.dart';
 import 'package:pixel_war_app/screens/no_internet_page.dart';
-import 'package:pixel_war_app/screens/sign_up/sign_up_form_widget.dart';
+import 'package:pixel_war_app/screens/sign_up/sign_up_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,10 @@ class SignUpScreen extends StatelessWidget {
           if (state is SignedInState) {
             Navigator.of(context).pushNamedAndRemoveUntil(AppRouter.gameRoute, (route) => false);
           }
-          return const SignUpFormWidget();
+          if (state is SignedOutState) {
+            return const SignUpScreen();
+          }
+          return const LoadingScreen();
         },
       ),
     );

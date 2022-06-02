@@ -3,7 +3,7 @@ part of 'services_bloc.dart';
 @immutable
 abstract class ServicesState {}
 
-class ServicesInitial extends ServicesState {}
+class LoadingState extends ServicesState {}
 
 class NoInternetState extends ServicesState {}
 

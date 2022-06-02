@@ -8,8 +8,8 @@ import 'package:pixel_war_app/widgets/logo_widget.dart';
 import 'package:pixel_war_app/widgets/spacer_widget.dart';
 import 'package:pixel_war_app/widgets/text_form_field_widget.dart';
 
-class SignInFormWidget extends StatelessWidget {
-  const SignInFormWidget({Key? key}) : super(key: key);
+class SignInScreen extends StatelessWidget {
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

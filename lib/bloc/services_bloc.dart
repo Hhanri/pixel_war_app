@@ -10,7 +10,7 @@ part 'services_state.dart';
 class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
   final ConnectivityService connectivityService = ConnectivityService();
   final SupabaseService supabaseService = SupabaseService();
-  ServicesBloc() : super(ServicesInitial()) {
+  ServicesBloc() : super(LoadingState()) {
 
     on<NoInternetEvent>((event, emit) {
       emit(NoInternetState());
@@ -48,6 +48,5 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         add(YesInternetEvent());
       }
     });
-
   }
 }

@@ -6,10 +6,10 @@ import 'package:pixel_war_app/screens/sign_up/sign_up_page.dart';
 class AppRouter {
   Route onGenerate(RouteSettings settings) {
     switch (settings.name) {
-      case signInRoute : return MaterialPageRoute(builder: (_) => const SignInScreen());
-      case signUpRoute : return MaterialPageRoute(builder: (_) => const SignUpScreen());
+      case signInRoute : return MaterialPageRoute(builder: (_) => const SignInPage());
+      case signUpRoute : return MaterialPageRoute(builder: (_) => const SignUpPage());
       case gameRoute : return MaterialPageRoute(builder: (_) => const GamePage());
-      default : return MaterialPageRoute(builder: (_) => const SignInScreen());
+      default : return MaterialPageRoute(builder: (_) => const SignInPage());
     }
   }
 
