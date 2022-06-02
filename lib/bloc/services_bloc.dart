@@ -40,9 +40,13 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         //emit NoProfileState
     });
 
-    on<SignUpEvent>((event, emit) {
-      supabaseService.signUp(email: event.email, password: event.password);
-      emit(SignedOutState());
+    on<SignUpEvent>((event, emit) async {
+      emit(LoadingState());
+      if (await supabaseService.signUp(email: event.email, password: event.password)) {
+        //confirm email screen
+      } else {
+        //error message
+      }
     });
 
     on<SignOutEvent>((event, emit) {
