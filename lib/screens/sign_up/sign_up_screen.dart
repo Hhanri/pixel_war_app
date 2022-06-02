@@ -55,7 +55,12 @@ class SignUpScreen extends StatelessWidget {
                 onPressed: () {
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (formKey.currentState!.validate()) {
-                    BlocProvider.of<ServicesBloc>(context).add(SignUpEvent(email: emailController.text, password: passwordController.text));
+                    BlocProvider.of<ServicesBloc>(context).add(
+                      SignUpEvent(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      )
+                    );
                   }
                 },
                 text: AppStringConstants.signUpTitle

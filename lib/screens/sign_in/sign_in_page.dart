@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
-import 'package:pixel_war_app/screens/loading_page.dart';
+import 'package:pixel_war_app/screens/confirmation_email_screen.dart';
+import 'package:pixel_war_app/screens/error_screen.dart';
+import 'package:pixel_war_app/screens/loading_screen.dart';
 import 'package:pixel_war_app/screens/no_internet_screen.dart';
 import 'package:pixel_war_app/screens/sign_in/sign_in_screen.dart';
 
@@ -22,6 +24,12 @@ class SignInPage extends StatelessWidget {
           }
           if (state is SignedOutState) {
             return const SignInScreen();
+          }
+          if (state is ErrorState) {
+            return ErrorScreen(error: state.error);
+          }
+          if (state is ConfirmEmailState) {
+            return ConfirmationEmailScreen(email: state.email, password: state.password,);
           }
           return const LoadingScreen();
         },

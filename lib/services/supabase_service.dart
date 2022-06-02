@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class SupabaseService {
   final SupabaseClient supabaseInstance = Supabase.instance.client;
 
-  Future<bool> signUp({required String email, required String password}) async{
+  Future<GotrueError?> signUp({required String email, required String password}) async{
     final GotrueSessionResponse response = await supabaseInstance.auth.signUp(
       email,
       password,
@@ -16,22 +16,13 @@ class SupabaseService {
       )
     );
     final GotrueError? error = response.error;
-    if (error == null) {
-      print('check emails');
-      return true;
-    }
-    print(error.message);
-    return false;
+    return error;
   }
 
-  Future<bool> signIn({required String email, required String password}) async {
+  Future<GotrueError?> signIn({required String email, required String password}) async {
     final GotrueSessionResponse response = await supabaseInstance.auth.signIn(email: email, password: password);
     final GotrueError? error = response.error;
-    if (error == null) {
-      return true;
-    }
-    print(error.message);
-    return false;
+    return error;
   }
 
   Future<bool> signOut() async {

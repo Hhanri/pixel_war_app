@@ -7,11 +7,15 @@ class AppStringConstants {
   //app titles
   static const String signInTitle = "Sign In";
   static const String signUpTitle = "Sign Up";
+  static const String goBackTitle = "Go Back";
+  static const String resendLink = "Resend link";
 
   //app texts
   static const String noAccountYetText = "No Account yet ?";
   static const String alreadyHaveAnAccountText = "Already have an account ?";
   static const String noInternet = "No Internet";
+  static const String confirmEmail = "Please confirm your email by clicking on the link we sent you, then press on Go Back";
+
 }
 
 class TextFormFieldConstants {

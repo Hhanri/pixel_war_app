@@ -19,6 +19,18 @@ class SignOutEvent extends ServicesEvent {}
 class SignUpEvent extends ServicesEvent {
   final String email;
   final String password;
-
   SignUpEvent({required this.email, required this.password});
+}
+
+class ThrowErrorEvent extends ServicesEvent {
+  final GotrueError error;
+
+  ThrowErrorEvent({required this.error});
+}
+
+class ThrowConfirmEmailEvent extends ServicesEvent {
+  final String email;
+  final String password;
+
+  ThrowConfirmEmailEvent({required this.email, required this.password});
 }
