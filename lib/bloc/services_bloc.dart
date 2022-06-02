@@ -24,11 +24,18 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       }
     });
 
-    on<SignInEvent>((event, emit) {
+    on<SignInEvent>((event, emit) async {
+      emit(LoadingState());
       if (!supabaseService.checkAuthentication()) {
-        supabaseService.signIn(email: event.email!, password: event.password!);
+        if (await supabaseService.signIn(email: event.email!, password: event.password!)){
+          emit(SignedInState());
+        } else {
+          emit(SignedOutState());
+        }
+      } else {
+        emit(SignedInState());
       }
-      emit(SignedInState());
+
       //if profile !exists
         //emit NoProfileState
     });
