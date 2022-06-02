@@ -1,14 +1,26 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService {
   final SupabaseClient supabaseInstance = Supabase.instance.client;
 
   Future<bool> signUp({required String email, required String password}) async{
-    final GotrueSessionResponse response = await supabaseInstance.auth.signUp(email, password);
+    final GotrueSessionResponse response = await supabaseInstance.auth.signUp(
+      email,
+      password,
+      options: AuthOptions(
+        redirectTo:
+        kIsWeb
+          ? null
+          : 'io.supabase.flutterquickstart://login-callback/'
+      )
+    );
     final GotrueError? error = response.error;
     if (error == null) {
+      print('check emails');
       return true;
     }
+    print(error.message);
     return false;
   }
 
@@ -18,6 +30,7 @@ class SupabaseService {
     if (error == null) {
       return true;
     }
+    print(error.message);
     return false;
   }
 
