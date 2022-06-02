@@ -29,6 +29,8 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         supabaseService.signIn(email: event.email!, password: event.password!);
       }
       emit(SignedInState());
+      //if profile !exists
+        //emit NoProfileState
     });
 
     on<SignUpEvent>((event, emit) {

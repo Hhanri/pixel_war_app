@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
 import 'package:pixel_war_app/screens/loading_page.dart';
-import 'package:pixel_war_app/screens/no_internet_page.dart';
+import 'package:pixel_war_app/screens/no_internet_screen.dart';
 import 'package:pixel_war_app/screens/sign_in/sign_in_screen.dart';
 
 class SignInPage extends StatelessWidget {

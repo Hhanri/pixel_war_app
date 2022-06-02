@@ -117,3 +117,21 @@ class PasswordConfirmationParameters extends TextFormFieldParameters {
       ]
   );
 }
+
+class NormalParameters extends TextFormFieldParameters {
+  NormalParameters({
+    required TextEditingController controller
+  }) : super(
+    label: "eMail",
+    hint: "example@example.com",
+    obscureText: false,
+    validator: (value) {
+      return null;
+    },
+    controller: controller,
+    inputFormatters: [
+      FilteringTextInputFormatter.deny(RegExp(r'[/\\]')),
+      FilteringTextInputFormatter.singleLineFormatter
+    ]
+  );
+}
