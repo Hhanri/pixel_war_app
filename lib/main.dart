@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
+import 'package:pixel_war_app/helpers/constants.dart';
 import 'package:pixel_war_app/helpers/supabase_keys.dart';
 
 void main() async {
@@ -18,11 +19,8 @@ class MyApp extends StatelessWidget {
     return BlocProvider<ServicesBloc>(
       create: (context) => ServicesBloc(),
       child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          brightness: Brightness.dark
-        ),
+        title: AppStringConstants.appTitle,
+        theme: AppThemeConstants.theme,
         themeMode: ThemeMode.dark,
         onGenerateRoute: appRouter.onGenerate,
         initialRoute: AppRouter.signInRoute,

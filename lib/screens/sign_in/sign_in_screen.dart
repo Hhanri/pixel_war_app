@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
+import 'package:pixel_war_app/helpers/constants.dart';
 import 'package:pixel_war_app/widgets/additional_link_widget.dart';
 import 'package:pixel_war_app/widgets/button_widget.dart';
 import 'package:pixel_war_app/widgets/logo_widget.dart';
@@ -53,12 +54,12 @@ class SignInScreen extends StatelessWidget {
                     );
                   }
                 },
-                text: "Sign In"
+                text: AppStringConstants.signInTitle
               ),
               const SpacerWidget(),
               AdditionalLinkWidget(
-                text: "No Account yet ?",
-                linkText: "Sign Up",
+                text: AppStringConstants.noAccountYetText,
+                linkText: AppStringConstants.signUpTitle,
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(AppRouter.signUpRoute, (route) => false);
                 }

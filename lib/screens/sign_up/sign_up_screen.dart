@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
+import 'package:pixel_war_app/helpers/constants.dart';
 import 'package:pixel_war_app/widgets/additional_link_widget.dart';
 import 'package:pixel_war_app/widgets/button_widget.dart';
 import 'package:pixel_war_app/widgets/logo_widget.dart';
@@ -57,11 +58,11 @@ class SignUpScreen extends StatelessWidget {
                     BlocProvider.of<ServicesBloc>(context).add(SignUpEvent(email: emailController.text, password: passwordController.text));
                   }
                 },
-                text: 'Sign Up'
+                text: AppStringConstants.signUpTitle
               ),
               AdditionalLinkWidget(
-                text: "Already have an account ?",
-                linkText: "Sign In",
+                text: AppStringConstants.alreadyHaveAnAccountText,
+                linkText: AppStringConstants.signInTitle,
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(AppRouter.signInRoute, (route) => false);
                 }
