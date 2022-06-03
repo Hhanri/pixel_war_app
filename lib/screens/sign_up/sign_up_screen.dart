@@ -21,7 +21,6 @@ class SignUpScreen extends StatelessWidget {
       key: formKey,
       child: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
           reverse: true,
           child: Column(
             mainAxisSize: MainAxisSize.min,

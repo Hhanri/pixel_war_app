@@ -32,7 +32,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         final GotrueError? error = await supabaseService.signIn(email: event.email!, password: event.password!);
         if (error != null) {
           emit(LoadingState());
-          add(ThrowErrorEvent(error: error));
+          add(ThrowGoTrueErrorEvent(error: error));
           return;
         }
       }
@@ -45,7 +45,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       if (error == null) {
         add(ThrowConfirmEmailEvent(email: event.email, password: event.password));
       } else {
-        add(ThrowErrorEvent(error: error));
+        add(ThrowGoTrueErrorEvent(error: error));
       }
       emit(SignedOutState());
     });
@@ -55,8 +55,12 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       emit(SignedOutState());
     });
 
-    on<ThrowErrorEvent>((event, emit) {
-      emit(ErrorState(error: event.error));
+    on<ThrowGoTrueErrorEvent>((event, emit) {
+      emit(GoTrueErrorState(error: event.error));
+    });
+
+    on<ThrowPostgrestErrorEvent>((event, emit) {
+      emit(PostgrestErrorState(error: event.error));
     });
 
     on<ThrowConfirmEmailEvent>((event, emit) {
@@ -67,7 +71,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       supabaseService.getStreamProfileState().listen((event) {
         print("event = $event");
         if (event.isEmpty) {
-          //create profile
+          add(LoadNoProfileEvent());
         } else if (event.first['banned'] == true) {
           add(LoadBannedProfileEvent());
         } else {
@@ -80,8 +84,19 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       emit(BannedProfileState());
     });
 
+    on<LoadNoProfileEvent>((event, emit) {
+      emit(NoProfileState());
+    });
+
     on<LoadSignedInEvent>((event, emit) {
       emit(SignedInState());
+    });
+
+    on<CreateProfileEvent>((event, emit) async {
+      final PostgrestResponse<dynamic> result = await supabaseService.createProfile(username: event.username);
+      if (result.error != null) {
+        add(ThrowPostgrestErrorEvent(error: result.error!));
+      }
     });
 
     add(SignOutEvent());

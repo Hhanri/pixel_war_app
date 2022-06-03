@@ -11,30 +11,37 @@ class TextFormFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: parameters.controller,
-      validator: (value) {
-        return parameters.validator(value);
-      },
-      obscureText: parameters.obscureText,
-      decoration: InputDecoration(
-        label: Text(parameters.label),
-        hintText: parameters.hint,
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 1, color: Colors.redAccent),
-          borderRadius: BorderRadius.circular(10)
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: TextFormField(
+        controller: parameters.controller,
+        validator: (value) {
+          return parameters.validator(value);
+        },
+        obscureText: parameters.obscureText,
+        decoration: InputDecoration(
+          label: Text(parameters.label),
+          hintText: parameters.hint,
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: Colors.blueAccent),
+            borderRadius: BorderRadius.circular(10)
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: Colors.redAccent),
+            borderRadius: BorderRadius.circular(10)
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: Colors.blueAccent),
+            borderRadius: BorderRadius.circular(10)
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: Colors.greenAccent),
+            borderRadius: BorderRadius.circular(10)
+          )
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 1, color: Colors.blueAccent),
-          borderRadius: BorderRadius.circular(10)
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 2, color: Colors.blueAccent),
-          borderRadius: BorderRadius.circular(10)
-        )
+        keyboardType: parameters.keyboardType,
+        inputFormatters: parameters.inputFormatters,
       ),
-      keyboardType: parameters.keyboardType,
-      inputFormatters: parameters.inputFormatters,
     );
   }
 }
@@ -66,6 +73,9 @@ class EmailParameters extends TextFormFieldParameters {
     hint: TextFormFieldConstants.emailHint,
     obscureText: false,
     validator: (value) {
+      if (value!.isEmpty) {
+        return ErrorConstants.emptyFieldError;
+      }
       if (!value.isEmail()) {
         return ErrorConstants.invalidEmailError;
       }
@@ -88,7 +98,10 @@ class PasswordParameters extends TextFormFieldParameters {
     hint: TextFormFieldConstants.passwordHint,
     obscureText: true,
     validator: (value) {
-      if (value!.length < 6) {
+      if (value!.isEmpty) {
+        return ErrorConstants.emptyFieldError;
+      }
+      if (value.length < 6) {
         return ErrorConstants.passwordLengthError;
       }
       return null;
@@ -110,7 +123,10 @@ class PasswordConfirmationParameters extends TextFormFieldParameters {
       hint: TextFormFieldConstants.passwordConfirmationHint,
       obscureText: true,
       validator: (value) {
-        if (value!.length < 6) {
+        if (value!.isEmpty) {
+          return ErrorConstants.emptyFieldError;
+        }
+        if (value.length < 6) {
           return ErrorConstants.passwordLengthError;
         } else if (controller1.text != controller2.text){
           return ErrorConstants.passwordsNotMatchingError;
@@ -133,6 +149,15 @@ class UsernameParameters extends TextFormFieldParameters {
     hint: TextFormFieldConstants.usernameHint,
     obscureText: false,
     validator: (value) {
+      if (value!.isEmpty) {
+        return ErrorConstants.emptyFieldError;
+      }
+      if (value.length > 15) {
+        return ErrorConstants.usernameLengthError;
+      }
+      if (!value.isValidUsername()) {
+        return ErrorConstants.usernameCharactersError;
+      }
       return null;
     },
     controller: controller,

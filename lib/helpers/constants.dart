@@ -9,6 +9,7 @@ class AppStringConstants {
   static const String signUpTitle = "Sign Up";
   static const String signOutTitle = "Sign Out";
   static const String goBackTitle = "Go Back";
+  static const String createProfileTitle = "Create Profile";
   static const String resendLink = "Resend link";
 
   //app texts
@@ -31,10 +32,13 @@ class TextFormFieldConstants {
 }
 
 class ErrorConstants {
+  static const String emptyFieldError = "This field must not be empty";
   static const String invalidEmailError = "Invalid email";
   static const String passwordLengthError = "Password's length needs to be at least 6";
   static const String passwordsNotMatchingError = "Passwords Not Matching";
   static const String bannedProfileError = "Your account has been banned.";
+  static const String usernameLengthError = "Your username must have less than 16 characters.";
+  static const String usernameCharactersError = "Your username can only contain letters and digits";
 }
 
 class AppThemeConstants {

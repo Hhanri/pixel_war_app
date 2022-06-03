@@ -120,3 +120,22 @@ class SignOutButtonParameters extends ButtonWidgetParameters {
     text: AppStringConstants.signOutTitle
   );
 }
+
+class CreateProfileButtonParameters extends ButtonWidgetParameters {
+  final BuildContext context;
+  final TextEditingController usernameController;
+  final GlobalKey<FormState> formKey;
+  CreateProfileButtonParameters({
+    required this.context,
+    required this.formKey,
+    required this.usernameController
+  }) : super (
+    onPressed: () {
+      FocusManager.instance.primaryFocus?.unfocus();
+      if (formKey.currentState!.validate()) {
+        BlocProvider.of<ServicesBloc>(context).add(CreateProfileEvent(username: usernameController.text));
+      }
+    },
+    text: AppStringConstants.createProfileTitle
+  );
+}

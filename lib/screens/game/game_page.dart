@@ -5,6 +5,8 @@ import 'package:pixel_war_app/helpers/app_router.dart';
 import 'package:pixel_war_app/screens/banned_profile_screen.dart';
 import 'package:pixel_war_app/screens/loading_screen.dart';
 import 'package:pixel_war_app/screens/no_internet_screen.dart';
+import 'package:pixel_war_app/screens/no_profile_screen.dart';
+import 'package:pixel_war_app/screens/postgre_error_screen.dart';
 import 'package:pixel_war_app/widgets/pixel_grid_widget.dart';
 
 class GamePage extends StatelessWidget {
@@ -26,6 +28,12 @@ class GamePage extends StatelessWidget {
           }
           if (state is BannedProfileState) {
             return const BannedProfileScreen();
+          }
+          if (state is NoProfileState) {
+            return const NoProfileScreen();
+          }
+          if (state is PostgrestErrorState) {
+            return PostgrestErrorScreen(error: state.error);
           }
           return const LoadingScreen();
         },

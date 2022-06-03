@@ -4,9 +4,9 @@ import 'package:pixel_war_app/widgets/message_text_widget.dart';
 import 'package:pixel_war_app/widgets/spacer_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ErrorScreen extends StatelessWidget {
-  final GotrueError error;
-  const ErrorScreen({
+class PostgrestErrorScreen extends StatelessWidget {
+  final PostgrestError error;
+  const PostgrestErrorScreen({
     Key? key,
     required this.error
   }) : super(key: key);
@@ -17,8 +17,8 @@ class ErrorScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        if (error.statusCode != null)
-          MessageTextWidget(text: error.statusCode!),
+        if (error.code != null)
+          MessageTextWidget(text: error.code!),
         MessageTextWidget(text: error.message),
         const SpacerWidget(),
         ButtonWidget(

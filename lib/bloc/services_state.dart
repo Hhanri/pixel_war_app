@@ -13,10 +13,16 @@ class SignedOutState extends ServicesState {}
 
 class NoProfileState extends ServicesState {}
 
-class ErrorState extends ServicesState {
+class GoTrueErrorState extends ServicesState {
   final GotrueError error;
 
-  ErrorState({required this.error});
+  GoTrueErrorState({required this.error});
+}
+
+class PostgrestErrorState extends ServicesState {
+  final PostgrestError error;
+
+  PostgrestErrorState({required this.error});
 }
 
 class ConfirmEmailState extends ServicesState {
