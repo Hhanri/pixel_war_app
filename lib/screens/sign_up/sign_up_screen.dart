@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
 import 'package:pixel_war_app/helpers/constants.dart';
 import 'package:pixel_war_app/widgets/additional_link_widget.dart';
@@ -52,18 +50,12 @@ class SignUpScreen extends StatelessWidget {
               ),
               const SpacerWidget(),
               ButtonWidget(
-                onPressed: () {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  if (formKey.currentState!.validate()) {
-                    BlocProvider.of<ServicesBloc>(context).add(
-                      SignUpEvent(
-                        email: emailController.text,
-                        password: passwordController.text,
-                      )
-                    );
-                  }
-                },
-                text: AppStringConstants.signUpTitle
+                parameters: SignUpButtonParameters(
+                  context: context,
+                  formKey: formKey,
+                  emailController: emailController,
+                  passwordController: passwordController
+                ),
               ),
               AdditionalLinkWidget(
                 text: AppStringConstants.alreadyHaveAnAccountText,

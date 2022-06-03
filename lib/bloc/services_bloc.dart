@@ -32,17 +32,14 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         final GotrueError? error = await supabaseService.signIn(email: event.email!, password: event.password!);
         if (error == null) {
           emit(SignedInState());
+          add(CheckProfileStateEvent());
         } else {
           add(ThrowErrorEvent(error: error));
         }
       } else {
         emit(SignedInState());
+        add(CheckProfileStateEvent());
       }
-
-      //if profile !exists
-        //emit NoProfileState
-
-      add(CheckProfileStateEvent());
     });
 
     on<SignUpEvent>((event, emit) async {

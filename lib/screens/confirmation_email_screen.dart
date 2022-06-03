@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/constants.dart';
 import 'package:pixel_war_app/widgets/button_widget.dart';
 import 'package:pixel_war_app/widgets/message_text_widget.dart';
@@ -24,17 +22,15 @@ class ConfirmationEmailScreen extends StatelessWidget {
         const MessageTextWidget(text: AppStringConstants.confirmEmail),
         const SpacerWidget(),
         ButtonWidget(
-          onPressed: () {
-            BlocProvider.of<ServicesBloc>(context).add(SignUpEvent(email: email, password: password));
-          },
-          text: AppStringConstants.resendLink
+          parameters: ResendLinkButtonParameters(
+            context: context,
+            email: email,
+            password: password
+          ),
         ),
         const SpacerWidget(),
         ButtonWidget(
-          onPressed: () {
-            BlocProvider.of<ServicesBloc>(context).add(SignOutEvent());
-          },
-          text: AppStringConstants.goBackTitle
+          parameters: GoBackButtonParameters(context: context),
         ),
       ],
     );
