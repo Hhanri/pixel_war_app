@@ -14,6 +14,9 @@ class TextFormFieldWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
+        onChanged: (value) {
+          print(value);
+        },
         controller: parameters.controller,
         validator: (value) {
           return parameters.validator(value);

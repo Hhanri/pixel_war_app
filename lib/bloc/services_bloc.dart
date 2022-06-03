@@ -108,5 +108,11 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         add(YesInternetEvent());
       }
     });
+
+    @override
+    Future<void> close() {
+      connectivityService.connectivityStream.close();
+      return super.close();
+    }
   }
 }

@@ -8,7 +8,7 @@ import 'package:pixel_war_app/screens/gotrue_error_screen.dart';
 import 'package:pixel_war_app/screens/loading_screen.dart';
 import 'package:pixel_war_app/screens/no_internet_screen.dart';
 import 'package:pixel_war_app/screens/no_profile_screen.dart';
-import 'package:pixel_war_app/screens/postgre_error_screen.dart';
+import 'package:pixel_war_app/screens/postgrest_error_screen.dart';
 import 'package:pixel_war_app/screens/sign_in/sign_in_screen.dart';
 
 class SignInPage extends StatelessWidget {

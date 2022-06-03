@@ -7,16 +7,40 @@ import 'package:pixel_war_app/widgets/logo_widget.dart';
 import 'package:pixel_war_app/widgets/spacer_widget.dart';
 import 'package:pixel_war_app/widgets/text_form_field_widget.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController passwordConfirmationController = TextEditingController();
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
 
+class _SignUpScreenState extends State<SignUpScreen> {
+
+  late GlobalKey<FormState> formKey;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late TextEditingController passwordConfirmationController;
+
+  @override
+  void initState() {
+    super.initState();
+    formKey = GlobalKey<FormState>();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    passwordConfirmationController = TextEditingController();
+
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    passwordConfirmationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Form(
       key: formKey,
       child: Center(
