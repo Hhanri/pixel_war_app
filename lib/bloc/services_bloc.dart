@@ -41,6 +41,8 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
 
       //if profile !exists
         //emit NoProfileState
+
+      add(CheckProfileStateEvent());
     });
 
     on<SignUpEvent>((event, emit) async {
@@ -66,7 +68,20 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
     on<ThrowConfirmEmailEvent>((event, emit) {
       emit(ConfirmEmailState(email: event.email, password: event.password));
     });
+
+    on<CheckProfileStateEvent>((event, emit) {
+      supabaseService.getStreamProfileState().listen((event) {
+        print("event = $event");
+        if (event.isEmpty) {
+          //create profile
+        } else if (event.first['banned'] == true) {
+          //emit ban state
+        }
+      });
+    });
+
     add(SignOutEvent());
+
     connectivityService.connectivityStream.stream.listen((event) {
       if (event == ConnectivityResult.none) {
         add(NoInternetEvent());

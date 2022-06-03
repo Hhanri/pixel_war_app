@@ -34,3 +34,5 @@ class ThrowConfirmEmailEvent extends ServicesEvent {
 
   ThrowConfirmEmailEvent({required this.email, required this.password});
 }
+
+class CheckProfileStateEvent extends ServicesEvent {}

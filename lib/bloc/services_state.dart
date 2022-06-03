@@ -25,3 +25,5 @@ class ConfirmEmailState extends ServicesState {
 
   ConfirmEmailState({required this.email, required this.password});
 }
+
+class BannedProfileState extends ServicesState {}

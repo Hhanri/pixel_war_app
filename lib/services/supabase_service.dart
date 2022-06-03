@@ -43,4 +43,16 @@ class SupabaseService {
     return true;
   }
 
+  String getCurrentUserId() {
+    return supabaseInstance.auth.currentUser!.id;
+  }
+
+  Stream<List<Map<String, dynamic>>> getStreamProfileState() {
+    final Stream<List<Map<String, dynamic>>> streamProfileState = supabaseInstance
+      .from('profiles:id=eq.${getCurrentUserId()}')
+      .stream([])
+      .execute();
+    return streamProfileState;
+  }
+
 }
