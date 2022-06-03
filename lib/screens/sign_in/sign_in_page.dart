@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
+import 'package:pixel_war_app/screens/banned_profile_screen.dart';
 import 'package:pixel_war_app/screens/confirmation_email_screen.dart';
 import 'package:pixel_war_app/screens/error_screen.dart';
 import 'package:pixel_war_app/screens/loading_screen.dart';
@@ -24,6 +25,9 @@ class SignInPage extends StatelessWidget {
           }
           if (state is SignedOutState) {
             return const SignInScreen();
+          }
+          if (state is BannedProfileState) {
+            return const BannedProfileScreen();
           }
           if (state is ErrorState) {
             return ErrorScreen(error: state.error);

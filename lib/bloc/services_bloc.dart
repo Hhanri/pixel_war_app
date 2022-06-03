@@ -36,8 +36,6 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
           return;
         }
       }
-      add(LoadSignedInEvent());
-      emit(LoadingState());
       add(CheckProfileStateEvent());
     });
 
