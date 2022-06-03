@@ -108,3 +108,15 @@ class ResendLinkButtonParameters extends ButtonWidgetParameters {
     text: AppStringConstants.resendLink
   );
 }
+
+class SignOutButtonParameters extends ButtonWidgetParameters {
+  final BuildContext context;
+  SignOutButtonParameters({
+    required this.context,
+  }) : super (
+    onPressed: () {
+      BlocProvider.of<ServicesBloc>(context).add(SignOutEvent());
+    },
+    text: AppStringConstants.signOutTitle
+  );
+}

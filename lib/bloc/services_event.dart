@@ -36,3 +36,9 @@ class ThrowConfirmEmailEvent extends ServicesEvent {
 }
 
 class CheckProfileStateEvent extends ServicesEvent {}
+
+class LoadBannedProfileEvent extends ServicesEvent {}
+
+class LoadNoProfileEvent extends ServicesEvent {}
+
+class LoadSignedInEvent extends ServicesEvent {}

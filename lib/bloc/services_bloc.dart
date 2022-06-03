@@ -30,16 +30,15 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       emit(LoadingState());
       if (!supabaseService.checkAuthentication()) {
         final GotrueError? error = await supabaseService.signIn(email: event.email!, password: event.password!);
-        if (error == null) {
-          emit(SignedInState());
-          add(CheckProfileStateEvent());
-        } else {
+        if (error != null) {
+          emit(LoadingState());
           add(ThrowErrorEvent(error: error));
+          return;
         }
-      } else {
-        emit(SignedInState());
-        add(CheckProfileStateEvent());
       }
+      add(LoadSignedInEvent());
+      emit(LoadingState());
+      add(CheckProfileStateEvent());
     });
 
     on<SignUpEvent>((event, emit) async {
@@ -66,15 +65,25 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       emit(ConfirmEmailState(email: event.email, password: event.password));
     });
 
-    on<CheckProfileStateEvent>((event, emit) {
+    on<CheckProfileStateEvent>((event, emit) async {
       supabaseService.getStreamProfileState().listen((event) {
         print("event = $event");
         if (event.isEmpty) {
           //create profile
         } else if (event.first['banned'] == true) {
-          //emit ban state
+          add(LoadBannedProfileEvent());
+        } else {
+          add(LoadSignedInEvent());
         }
       });
+    });
+
+    on<LoadBannedProfileEvent>((event, emit) {
+      emit(BannedProfileState());
+    });
+
+    on<LoadSignedInEvent>((event, emit) {
+      emit(SignedInState());
     });
 
     add(SignOutEvent());

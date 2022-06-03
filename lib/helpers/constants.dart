@@ -7,6 +7,7 @@ class AppStringConstants {
   //app titles
   static const String signInTitle = "Sign In";
   static const String signUpTitle = "Sign Up";
+  static const String signOutTitle = "Sign Out";
   static const String goBackTitle = "Go Back";
   static const String resendLink = "Resend link";
 
@@ -33,6 +34,7 @@ class ErrorConstants {
   static const String invalidEmailError = "Invalid email";
   static const String passwordLengthError = "Password's length needs to be at least 6";
   static const String passwordsNotMatchingError = "Passwords Not Matching";
+  static const String bannedProfileError = "Your account has been banned.";
 }
 
 class AppThemeConstants {
