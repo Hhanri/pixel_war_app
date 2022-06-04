@@ -9,7 +9,6 @@ import 'package:pixel_war_app/screens/loading/loading_screen.dart';
 import 'package:pixel_war_app/screens/no_state_error_screen.dart';
 import 'package:pixel_war_app/screens/no_internet_screen.dart';
 import 'package:pixel_war_app/screens/no_profile_screen.dart';
-import 'package:pixel_war_app/widgets/pixel_grid_widget.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({Key? key}) : super(key: key);

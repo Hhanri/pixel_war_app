@@ -35,7 +35,7 @@ class GoBackButtonParameters extends ButtonWidgetParameters {
     required this.context,
   }) : super (
     onPressed: () {
-      BlocProvider.of<ServicesBloc>(context).add(SignOutEvent());
+      context.read<ServicesBloc>().add(SignOutEvent());
     },
     text: AppStringConstants.goBackTitle
   );
@@ -55,7 +55,7 @@ class SignUpButtonParameters extends ButtonWidgetParameters {
     onPressed: () {
       FocusManager.instance.primaryFocus?.unfocus();
       if (formKey.currentState!.validate()) {
-        BlocProvider.of<ServicesBloc>(context).add(
+        context.read<ServicesBloc>().add(
           SignUpEvent(
             email: emailController.text,
             password: passwordController.text,
@@ -81,7 +81,7 @@ class SignInButtonParameters extends ButtonWidgetParameters {
     onPressed: () {
       FocusManager.instance.primaryFocus?.unfocus();
       if (formKey.currentState!.validate()) {
-        BlocProvider.of<ServicesBloc>(context).add(
+        context.read<ServicesBloc>().add(
           SignInEvent(
             email: emailController.text,
             password: passwordController.text
@@ -103,7 +103,7 @@ class ResendLinkButtonParameters extends ButtonWidgetParameters {
     required this.password,
   }) : super (
     onPressed: () {
-      BlocProvider.of<ServicesBloc>(context).add(SignUpEvent(email: email, password: password));
+      context.read<ServicesBloc>().add(SignUpEvent(email: email, password: password));
     },
     text: AppStringConstants.resendLink
   );
@@ -115,7 +115,7 @@ class SignOutButtonParameters extends ButtonWidgetParameters {
     required this.context,
   }) : super (
     onPressed: () {
-      BlocProvider.of<ServicesBloc>(context).add(SignOutEvent());
+      context.read<ServicesBloc>().add(SignOutEvent());
     },
     text: AppStringConstants.signOutTitle
   );
@@ -133,7 +133,7 @@ class CreateProfileButtonParameters extends ButtonWidgetParameters {
     onPressed: () {
       FocusManager.instance.primaryFocus?.unfocus();
       if (formKey.currentState!.validate()) {
-        BlocProvider.of<ServicesBloc>(context).add(CreateProfileEvent(username: usernameController.text));
+        context.watch<ServicesBloc>().add(CreateProfileEvent(username: usernameController.text));
       }
     },
     text: AppStringConstants.createProfileTitle
