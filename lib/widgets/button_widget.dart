@@ -133,7 +133,7 @@ class CreateProfileButtonParameters extends ButtonWidgetParameters {
     onPressed: () {
       FocusManager.instance.primaryFocus?.unfocus();
       if (formKey.currentState!.validate()) {
-        context.watch<ServicesBloc>().add(CreateProfileEvent(username: usernameController.text));
+        context.read<ServicesBloc>().add(CreateProfileEvent(username: usernameController.text));
       }
     },
     text: AppStringConstants.createProfileTitle
