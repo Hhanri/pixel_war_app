@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppRouter appRouter = AppRouter();
     return BlocProvider<ServicesBloc>(
-      create: (context) => ServicesBloc(),
+      create: (context) => ServicesBloc()..add(AppInitializeEvent()),
       child: MaterialApp(
         title: AppStringConstants.appTitle,
         theme: AppThemeConstants.theme,

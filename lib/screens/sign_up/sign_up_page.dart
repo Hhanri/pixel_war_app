@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
+import 'package:pixel_war_app/dialogs/show_error_dialog.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
 import 'package:pixel_war_app/screens/confirmation_email_screen.dart';
-import 'package:pixel_war_app/screens/gotrue_error_screen.dart';
-import 'package:pixel_war_app/screens/loading_screen.dart';
+import 'package:pixel_war_app/screens/loading/loading_screen.dart';
+import 'package:pixel_war_app/screens/no_state_error_screen.dart';
 import 'package:pixel_war_app/screens/no_internet_screen.dart';
 import 'package:pixel_war_app/screens/sign_up/sign_up_screen.dart';
 
@@ -14,7 +15,21 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<ServicesBloc, ServicesState>(
+      body: BlocConsumer<ServicesBloc, ServicesState>(
+        listener: (context, state) {
+          if (state.isLoading) {
+            LoadingScreen.instance().show(context: context, text: 'loading...');
+          } else {
+            LoadingScreen.instance().hide();
+          }
+          final errorModel = state.errorModel;
+          if (errorModel != null) {
+            showErrorModel(
+              errorModel: errorModel,
+              context: context,
+            );
+          }
+        },
         builder: (context, state) {
           if (state is NoInternetState) {
             return const NoInternetScreen();
@@ -25,13 +40,11 @@ class SignUpPage extends StatelessWidget {
           if (state is SignedOutState) {
             return const SignUpScreen();
           }
-          if (state is GoTrueErrorState) {
-            return GoTrueErrorScreen(error: state.error);
-          }
           if (state is ConfirmEmailState) {
             return ConfirmationEmailScreen(email: state.email, password: state.password);
           }
-          return const LoadingScreen();
+          print("no state");
+          return const NoStateErrorScreen();
         },
       ),
     );

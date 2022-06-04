@@ -51,6 +51,10 @@ class SupabaseService {
     return supabaseInstance.auth.currentUser!.email!;
   }
 
+  User getCurrentUser() {
+    return supabaseInstance.auth.currentUser!;
+  }
+
   Stream<List<Map<String, dynamic>>> getStreamProfileState() {
     final Stream<List<Map<String, dynamic>>> streamProfileState = supabaseInstance
       .from('profiles:id=eq.${getCurrentUserId()}')

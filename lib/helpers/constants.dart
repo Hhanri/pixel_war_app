@@ -39,6 +39,7 @@ class ErrorConstants {
   static const String bannedProfileError = "Your account has been banned.";
   static const String usernameLengthError = "Your username must have less than 16 characters.";
   static const String usernameCharactersError = "Your username can only contain letters and digits";
+  static const String unknownError = "Unknown Error";
 }
 
 class AppThemeConstants {

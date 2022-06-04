@@ -22,18 +22,6 @@ class SignUpEvent extends ServicesEvent {
   SignUpEvent({required this.email, required this.password});
 }
 
-class ThrowGoTrueErrorEvent extends ServicesEvent {
-  final GotrueError error;
-
-  ThrowGoTrueErrorEvent({required this.error});
-}
-
-class ThrowPostgrestErrorEvent extends ServicesEvent {
-  final PostgrestError error;
-
-  ThrowPostgrestErrorEvent({required this.error});
-}
-
 class ThrowConfirmEmailEvent extends ServicesEvent {
   final String email;
   final String password;
@@ -43,14 +31,10 @@ class ThrowConfirmEmailEvent extends ServicesEvent {
 
 class CheckProfileStateEvent extends ServicesEvent {}
 
-class LoadBannedProfileEvent extends ServicesEvent {}
-
-class LoadNoProfileEvent extends ServicesEvent {}
-
-class LoadSignedInEvent extends ServicesEvent {}
-
 class CreateProfileEvent extends ServicesEvent {
   final String username;
 
   CreateProfileEvent({required this.username});
 }
+
+class AppInitializeEvent extends ServicesEvent {}
