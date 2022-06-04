@@ -23,25 +23,25 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
     on<YesInternetEvent>((event, emit) {
       if (supabaseService.checkAuthentication()) {
         add(SignInEvent());
-      } else {
-        emit(const SignedOutState(isLoading: false));
       }
     });
 
     on<SignInEvent>((event, emit) async {
-      emit(const SignedOutState(isLoading: true));
+      emit(const SignedOutState(isLoading: true, errorModel: null));
       if (!supabaseService.checkAuthentication()) {
         final GotrueError? error = await supabaseService.signIn(email: event.email!, password: event.password!);
         if (error != null) {
+          print("EMITTING ERROR");
           emit(SignedOutState(isLoading: false, errorModel: ErrorModel.generate(error: error)));
           return;
         }
       }
+      print("checking profile");
       add(CheckProfileStateEvent());
     });
 
     on<SignUpEvent>((event, emit) async {
-      emit(const SignedOutState(isLoading: true));
+      emit(const SignedOutState(isLoading: true, errorModel: null));
       final GotrueError? error = await supabaseService.signUp(email: event.email, password: event.password);
       if (error == null) {
         add(ThrowConfirmEmailEvent(email: event.email, password: event.password));
@@ -119,6 +119,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
 
     on<AppInitializeEvent>((event, emt) {
       //add(SignOutEvent());
+      print("APP INITIALIZING");
       connectivityService.connectivityStream.stream.listen((event) {
         if (event == ConnectivityResult.none) {
           add(NoInternetEvent());

@@ -18,12 +18,14 @@ class SignInPage extends StatelessWidget {
       body: BlocConsumer<ServicesBloc, ServicesState>(
         listener: (context, state) {
           if (state.isLoading) {
+            print("LOADING STATE");
             LoadingScreen.instance().show(context: context, text: 'loading...');
           } else {
             LoadingScreen.instance().hide();
           }
           final ErrorModel? errorModel = state.errorModel;
           if (errorModel != null) {
+            print("SHOWING ERROR");
             showErrorModel(
               errorModel: errorModel,
               context: context,
@@ -39,7 +41,7 @@ class SignInPage extends StatelessWidget {
             AppRouter.navigateTo(context: context, route: AppRouter.gameRoute);
           }
           if (state is SignedOutState) {
-            print("singed out state");
+            print("signed out state");
             return const SignInScreen();
           }
           print("no state");

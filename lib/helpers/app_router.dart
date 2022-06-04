@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pixel_war_app/screens/game/game_page.dart';
+import 'package:pixel_war_app/screens/no_state_error_screen.dart';
 import 'package:pixel_war_app/screens/sign_in/sign_in_page.dart';
 import 'package:pixel_war_app/screens/sign_up/sign_up_page.dart';
 
@@ -9,7 +10,7 @@ class AppRouter {
       case signInRoute : return returnPage(const SignInPage());
       case signUpRoute : return returnPage(const SignUpPage());
       case gameRoute : return returnPage(const GamePage());
-      default : return MaterialPageRoute(builder: (_) => const SignInPage());
+      default : return returnPage(const SignInPage());
     }
   }
 
@@ -18,7 +19,10 @@ class AppRouter {
   static const String gameRoute = "/game";
 
   static void navigateTo({required BuildContext context, required String route}) {
-    Future.microtask(() => Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false));
+    Future.microtask(() {
+      print("navigating to route");
+      Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+    });
   }
 
   MaterialPageRoute returnPage(Widget child) {
