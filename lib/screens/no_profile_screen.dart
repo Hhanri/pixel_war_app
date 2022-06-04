@@ -1,35 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pixel_war_app/widgets/button_widget.dart';
 import 'package:pixel_war_app/widgets/spacer_widget.dart';
 import 'package:pixel_war_app/widgets/text_form_field_widget.dart';
 
-class NoProfileScreen extends StatefulWidget {
+class NoProfileScreen extends HookWidget {
   const NoProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<NoProfileScreen> createState() => _NoProfileScreenState();
-}
-
-class _NoProfileScreenState extends State<NoProfileScreen> {
-
-  late GlobalKey<FormState> formKey;
-  late TextEditingController usernameController;
-
-  @override
-  void initState() {
-    super.initState();
-    formKey = GlobalKey<FormState>();
-    usernameController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    usernameController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final TextEditingController usernameController = useTextEditingController();
+
     return Form(
       key: formKey,
       child: Column(
