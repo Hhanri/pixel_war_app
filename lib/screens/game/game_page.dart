@@ -4,6 +4,7 @@ import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/dialogs/show_error_dialog.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
 import 'package:pixel_war_app/screens/banned_profile_screen.dart';
+import 'package:pixel_war_app/screens/game/game_screen.dart';
 import 'package:pixel_war_app/screens/loading/loading_screen.dart';
 import 'package:pixel_war_app/screens/no_state_error_screen.dart';
 import 'package:pixel_war_app/screens/no_internet_screen.dart';
@@ -42,9 +43,11 @@ class GamePage extends StatelessWidget {
             if (!state.hasProfile) {
               return const NoProfileScreen();
             }
-            return PixelGridWidget(parentContext: context);
+            print("in game state");
+            return const GameScreen();
           }
           if (state is SignedOutState) {
+            print("signing out");
             AppRouter.navigateTo(context: context, route: AppRouter.signInRoute);
           }
           print("no state");

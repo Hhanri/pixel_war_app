@@ -1,7 +1,7 @@
 part of 'services_bloc.dart';
 
 @immutable
-abstract class ServicesState {
+abstract class ServicesState extends Equatable {
   final bool isLoading;
   final ErrorModel? errorModel;
 
@@ -10,6 +10,9 @@ abstract class ServicesState {
 
 class NoInternetState extends ServicesState {
   const NoInternetState({required super.isLoading});
+
+  @override
+  List<Object?> get props => [isLoading, errorModel];
 }
 
 class SignedInState extends ServicesState {
@@ -23,10 +26,18 @@ class SignedInState extends ServicesState {
     required this.user,
     super.errorModel
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [hasProfile, isBanned, user, errorModel, isLoading];
 }
 
 class SignedOutState extends ServicesState {
   const SignedOutState({required super.isLoading, super.errorModel});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [isLoading, errorModel];
 }
 
 class ConfirmEmailState extends ServicesState {
@@ -39,4 +50,7 @@ class ConfirmEmailState extends ServicesState {
     required this.password
   });
 
+  @override
+  // TODO: implement props
+  List<Object?> get props => [isLoading, email, password, errorModel];
 }

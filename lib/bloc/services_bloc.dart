@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/models/error_model.dart';
@@ -23,7 +24,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       if (supabaseService.checkAuthentication()) {
         add(SignInEvent());
       } else {
-        add(SignOutEvent());
+        emit(const SignedOutState(isLoading: false));
       }
     });
 

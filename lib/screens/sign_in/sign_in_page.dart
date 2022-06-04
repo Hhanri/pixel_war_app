@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/dialogs/show_error_dialog.dart';
 import 'package:pixel_war_app/helpers/app_router.dart';
+import 'package:pixel_war_app/models/error_model.dart';
 import 'package:pixel_war_app/screens/loading/loading_screen.dart';
 import 'package:pixel_war_app/screens/no_state_error_screen.dart';
 import 'package:pixel_war_app/screens/no_internet_screen.dart';
@@ -21,7 +22,7 @@ class SignInPage extends StatelessWidget {
           } else {
             LoadingScreen.instance().hide();
           }
-          final errorModel = state.errorModel;
+          final ErrorModel? errorModel = state.errorModel;
           if (errorModel != null) {
             showErrorModel(
               errorModel: errorModel,
@@ -34,9 +35,11 @@ class SignInPage extends StatelessWidget {
             return const NoInternetScreen();
           }
           if (state is SignedInState) {
+            print("signing in state");
             AppRouter.navigateTo(context: context, route: AppRouter.gameRoute);
           }
           if (state is SignedOutState) {
+            print("singed out state");
             return const SignInScreen();
           }
           print("no state");

@@ -35,9 +35,9 @@ class LoadingScreen {
     final _text = StreamController<String>();
     _text.add(text);
 
-    final state = Overlay.of(context);
-    final renderBox = context.findRenderObject() as RenderBox;
-    final size = renderBox.size;
+    final OverlayState? state = Overlay.of(context);
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    final Size size = renderBox.size;
 
     final overlay = OverlayEntry(
       builder: (context) {
