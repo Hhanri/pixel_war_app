@@ -75,4 +75,24 @@ class SupabaseService {
     return response;
   }
 
+  Future<PostgrestResponse<dynamic>> putPixel({required int row, required int col, required String color}) async {
+    final PostgrestResponse<dynamic> response = await supabaseInstance.rpc(
+      'put_pixel',
+      params: {
+        'user_id_input': getCurrentUserId(),
+        'color_input': color,
+        'row_input': row,
+        'column_input': col
+      }
+    ).execute();
+    return response;
+  }
+
+  Stream<dynamic> getStreamGameGrid() {
+    final Stream<List<Map<String, dynamic>>> streamGameGrid = supabaseInstance
+        .from('game_grid')
+        .stream([])
+        .execute();
+    return streamGameGrid;
+  }
 }

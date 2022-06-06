@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pixel_war_app/screens/game/game_page.dart';
-import 'package:pixel_war_app/screens/no_state_error_screen.dart';
 import 'package:pixel_war_app/screens/sign_in/sign_in_page.dart';
 import 'package:pixel_war_app/screens/sign_up/sign_up_page.dart';
 
