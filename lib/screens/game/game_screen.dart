@@ -10,7 +10,7 @@ class GameScreen extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        PixelGridWidget(parentContext: context),
+        PixelGridWidget(),
         ButtonWidget(parameters: SignOutButtonParameters(context: context))
       ],
     );
