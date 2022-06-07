@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pixel_war_app/models/pixel_model.dart';
@@ -17,7 +16,7 @@ class PixelGridWidget extends HookWidget {
     print("BUILDING PIXELGRIDWIDGET");
 
     final TransformationController transformationController = useTransformationController();
-    transformationController.value.scale(10.0);
+    transformationController.value.scale(22.78095238095238);
     late final StreamController<List<Map<String, dynamic>>> streamController;
     streamController = useStreamController<List<Map<String, dynamic>>>(
       onListen: () {
@@ -26,19 +25,23 @@ class PixelGridWidget extends HookWidget {
     );
 
     return Center(
-      child: StreamBuilder<List<Map<String, dynamic>>>(
-        stream: streamController.stream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            print("REBUILD GRID STREAM");
-            return InteractiveViewer.builder(
-              minScale: 0.0001,
-              //cellHeight / MediaQuery.of(context).size.height,
-              maxScale: 30,
-              scaleEnabled: true,
-              boundaryMargin: EdgeInsets.zero,
-              transformationController: transformationController,
-              builder: (BuildContext context, vector.Quad viewport) {
+      child: InteractiveViewer.builder(
+        minScale: 0.0001,
+        key: UniqueKey(),
+        //cellHeight / MediaQuery.of(context).size.height,
+        maxScale: 30,
+        scaleEnabled: true,
+        boundaryMargin: EdgeInsets.zero,
+        transformationController: transformationController,
+        builder: (context, vector.Quad viewport) {
+          return StreamBuilder<List<Map<String, dynamic>>>(
+            stream: SupabaseService().getStreamGameGrid,//streamController.stream,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const NoStateErrorScreen();
+              }
+              else {
+                print(snapshot.data!.length);
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,6 +53,7 @@ class PixelGridWidget extends HookWidget {
                           for (int column = 0; column < columnCount; column++)
                             isCellVisible(row: row, column: column, viewport: viewport)
                               ? PixelWidget(
+                                  key: Key(snapshot.data!.singleWhere((element) => element['row_n'] == row && element['column_n'] == column)['id']),
                                   pixelModel: PixelModel(
                                   color: Color(int.parse(snapshot.data!.singleWhere((element) => element['row_n'] == row && element['column_n'] == column)['color'])),
                                   username: snapshot.data!.singleWhere((element) => element['row_n'] == row && element['column_n'] == column)['username']),
@@ -65,10 +69,8 @@ class PixelGridWidget extends HookWidget {
                   ],
                 );
               }
-            );
-          } else {
-            return const NoStateErrorScreen();
-          }
+            }
+          );
         }
       )
     );
