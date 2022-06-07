@@ -13,6 +13,7 @@ class PixelWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      key: key,
       onTap: onTap,
       child: Container(
         height: PixelModel.pixelHeight,

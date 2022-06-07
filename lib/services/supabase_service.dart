@@ -93,6 +93,8 @@ class SupabaseService {
     return supabaseInstance
       .from('game_grid')
       .stream([])
+      .order('row_n')
+      .order('column_n')
       .execute();
   }
 }

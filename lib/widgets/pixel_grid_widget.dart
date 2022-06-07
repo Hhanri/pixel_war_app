@@ -28,20 +28,15 @@ class PixelGridWidget extends HookWidget {
       child: InteractiveViewer.builder(
         minScale: 0.0001,
         key: UniqueKey(),
-        //cellHeight / MediaQuery.of(context).size.height,
         maxScale: 30,
         scaleEnabled: true,
         boundaryMargin: EdgeInsets.zero,
         transformationController: transformationController,
         builder: (context, vector.Quad viewport) {
           return StreamBuilder<List<Map<String, dynamic>>>(
-            stream: SupabaseService().getStreamGameGrid,//streamController.stream,
+            stream: streamController.stream,//streamController.stream,
             builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const NoStateErrorScreen();
-              }
-              else {
-                print(snapshot.data!.length);
+              if (snapshot.hasData) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,10 +48,10 @@ class PixelGridWidget extends HookWidget {
                           for (int column = 0; column < columnCount; column++)
                             isCellVisible(row: row, column: column, viewport: viewport)
                               ? PixelWidget(
-                                  key: Key(snapshot.data!.singleWhere((element) => element['row_n'] == row && element['column_n'] == column)['id']),
+                                  key: ValueKey(snapshot.data!.firstWhere((element) => element['row_n'] == row && element['column_n'] == column)['id']),
                                   pixelModel: PixelModel(
-                                  color: Color(int.parse(snapshot.data!.singleWhere((element) => element['row_n'] == row && element['column_n'] == column)['color'])),
-                                  username: snapshot.data!.singleWhere((element) => element['row_n'] == row && element['column_n'] == column)['username']),
+                                  color: Color(int.parse(snapshot.data!.firstWhere((element) => element['row_n'] == row && element['column_n'] == column)['color'])),
+                                  username: snapshot.data!.firstWhere((element) => element['row_n'] == row && element['column_n'] == column)['username']),
                                   onTap: () {
                                     //final newGrid = snapshot.data!
                                     //    ..[row][column] = PixelModel(color: Colors.black, username: '');
@@ -68,6 +63,8 @@ class PixelGridWidget extends HookWidget {
                       )
                   ],
                 );
+              } else {
+                return const NoStateErrorScreen();
               }
             }
           );
