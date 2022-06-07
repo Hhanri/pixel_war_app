@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -88,11 +89,10 @@ class SupabaseService {
     return response;
   }
 
-  Stream<dynamic> getStreamGameGrid() {
-    final Stream<List<Map<String, dynamic>>> streamGameGrid = supabaseInstance
-        .from('game_grid')
-        .stream([])
-        .execute();
-    return streamGameGrid;
+  Stream<List<Map<String, dynamic>>> get getStreamGameGrid {
+    return supabaseInstance
+      .from('game_grid')
+      .stream([])
+      .execute();
   }
 }

@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pixel_war_app/models/pixel_model.dart';
+import 'package:pixel_war_app/screens/no_state_error_screen.dart';
+import 'package:pixel_war_app/services/supabase_service.dart';
 import 'package:pixel_war_app/widgets/pixel_widget.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
-
 import '../helpers/helpers.dart';
 
 class PixelGridWidget extends HookWidget {
@@ -16,26 +17,28 @@ class PixelGridWidget extends HookWidget {
     print("BUILDING PIXELGRIDWIDGET");
 
     final TransformationController transformationController = useTransformationController();
-    transformationController.value.scale(35.0);
-    late final StreamController<List<List<PixelModel>>> gridStreamController;
-    gridStreamController= useStreamController<List<List<PixelModel>>>(
+    transformationController.value.scale(10.0);
+    late final StreamController<List<Map<String, dynamic>>> streamController;
+    streamController = useStreamController<List<Map<String, dynamic>>>(
       onListen: () {
-        gridStreamController.sink.add(gridTest);
+        streamController.addStream(SupabaseService().getStreamGameGrid);
       }
     );
 
     return Center(
-      child: InteractiveViewer.builder(
-        minScale: 0.0001,//cellHeight / MediaQuery.of(context).size.height,
-        maxScale: 50,
-        scaleEnabled: true,
-        boundaryMargin: EdgeInsets.zero,
-        transformationController: transformationController,
-        builder: (BuildContext context, vector.Quad viewport) {
-          return Center(
-            child: StreamBuilder<List<List<PixelModel>>>(
-              stream: gridStreamController.stream,
-              builder: (context, snapshot) {
+      child: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: streamController.stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print("REBUILD GRID STREAM");
+            return InteractiveViewer.builder(
+              minScale: 0.0001,
+              //cellHeight / MediaQuery.of(context).size.height,
+              maxScale: 30,
+              scaleEnabled: true,
+              boundaryMargin: EdgeInsets.zero,
+              transformationController: transformationController,
+              builder: (BuildContext context, vector.Quad viewport) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,11 +50,13 @@ class PixelGridWidget extends HookWidget {
                           for (int column = 0; column < columnCount; column++)
                             isCellVisible(row: row, column: column, viewport: viewport)
                               ? PixelWidget(
-                                  pixelModel: gridTest[row][column],
+                                  pixelModel: PixelModel(
+                                  color: Color(int.parse(snapshot.data!.singleWhere((element) => element['row_n'] == row && element['column_n'] == column)['color'])),
+                                  username: snapshot.data!.singleWhere((element) => element['row_n'] == row && element['column_n'] == column)['username']),
                                   onTap: () {
-                                    final newGrid = snapshot.data!
-                                        ..[row][column] = PixelModel(color: Colors.black, username: '');
-                                    gridStreamController.sink.add(newGrid);
+                                    //final newGrid = snapshot.data!
+                                    //    ..[row][column] = PixelModel(color: Colors.black, username: '');
+                                    //gridStreamController.sink.add(newGrid);
                                   },
                                 )
                               : const SizedBox(height: cellHeight, width: cellWidth)
@@ -60,10 +65,12 @@ class PixelGridWidget extends HookWidget {
                   ],
                 );
               }
-            ),
-          );
-        },
-      ),
+            );
+          } else {
+            return const NoStateErrorScreen();
+          }
+        }
+      )
     );
   }
   vector.Quad cachedViewport = vector.Quad();
@@ -73,8 +80,8 @@ class PixelGridWidget extends HookWidget {
   int lastVisibleRow = 0;
   static const double cellWidth = PixelModel.pixelWidth;
   static const double cellHeight = PixelModel.pixelHeight;
-  static int rowCount = gridTest.length;
-  static int columnCount = gridTest[0].length;
+  static int rowCount = 10; //gridTest.length;
+  static int columnCount = 10; //gridTest[0].length;
   bool isCellVisible({required int row, required int column, required vector.Quad viewport}) {
     if (viewport != cachedViewport) {
       final Rect aabb = axisAlignedBoundingBox(viewport);
