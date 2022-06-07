@@ -38,3 +38,10 @@ class CreateProfileEvent extends ServicesEvent {
 }
 
 class AppInitializeEvent extends ServicesEvent {}
+
+class PutPixelEvent extends ServicesEvent {
+  final int row;
+  final int col;
+  final String color;
+  PutPixelEvent({required this.row, required this.col, required this.color});
+}

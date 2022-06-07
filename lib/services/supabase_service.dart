@@ -64,6 +64,14 @@ class SupabaseService {
     return streamProfileState;
   }
 
+  Future<PostgrestResponse<dynamic>> getFutureProfileState() async {
+    final PostgrestResponse<dynamic> response = await supabaseInstance
+        .from('profiles:id=eq.${getCurrentUserId()}')
+        .select('*')
+        .execute();
+    return response;
+  }
+
   Future<PostgrestResponse<dynamic>> createProfile({required String username}) async {
     final PostgrestResponse<dynamic> response = await supabaseInstance.rpc(
       'create_user_profile',

@@ -129,6 +129,60 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       });
     });
 
+    on<PutPixelEvent>((event, emit) async {
+      print("check profile");
+      emit(SignedInState(isLoading: true, hasProfile: true, isBanned: false, user: supabaseService.getCurrentUser()));
+      final profileResponse = await supabaseService.getFutureProfileState();
+      if (profileResponse.error != null) {
+        emit(
+          SignedInState(
+            isLoading: false,
+            errorModel: ErrorModel.generate(error: profileResponse.error),
+            hasProfile: true,
+            isBanned: false,
+            user: supabaseService.getCurrentUser()
+          )
+        );
+        return;
+      }
+      print("put pixel");
+      print(profileResponse.data.first['plays']);
+      if (profileResponse.data.first['plays'] > 0) {
+        final playResponse = await supabaseService.putPixel(row: event.row, col: event.col, color: event.color);
+        print("data = ${playResponse.data}");
+        if (playResponse.error != null) {
+          emit(
+            SignedInState(
+              isLoading: false,
+              errorModel: ErrorModel.generate(error: profileResponse.error),
+              hasProfile: true,
+              isBanned: false,
+              user: supabaseService.getCurrentUser()
+            )
+          );
+        } else {
+          print("pixel changed");
+          emit(
+            SignedInState(
+              isLoading: false,
+              hasProfile: true,
+              isBanned: false,
+              user: supabaseService.getCurrentUser()
+            )
+          );
+        }
+      } else {
+        emit(
+          SignedInState(
+            isLoading: false,
+            errorModel: ErrorModel.generate(error: "Not enough available plays"),
+            hasProfile: true,
+            isBanned: false,
+            user: supabaseService.getCurrentUser()
+          )
+        );
+      }
+    });
 
     @override
     Future<void> close() {

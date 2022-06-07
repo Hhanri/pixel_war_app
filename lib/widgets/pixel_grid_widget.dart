@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:pixel_war_app/bloc/services_bloc.dart';
 import 'package:pixel_war_app/models/pixel_model.dart';
 import 'package:pixel_war_app/screens/no_state_error_screen.dart';
 import 'package:pixel_war_app/services/supabase_service.dart';
@@ -53,9 +55,8 @@ class PixelGridWidget extends HookWidget {
                                   color: Color(int.parse(snapshot.data!.firstWhere((element) => element['row_n'] == row && element['column_n'] == column)['color'])),
                                   username: snapshot.data!.firstWhere((element) => element['row_n'] == row && element['column_n'] == column)['username']),
                                   onTap: () {
-                                    //final newGrid = snapshot.data!
-                                    //    ..[row][column] = PixelModel(color: Colors.black, username: '');
-                                    //gridStreamController.sink.add(newGrid);
+                                    print("row: $row | col: $column");
+                                    context.read<ServicesBloc>().add(PutPixelEvent(row: row, col: column, color: '0xFF5678DF'));
                                   },
                                 )
                               : const SizedBox(height: cellHeight, width: cellWidth)

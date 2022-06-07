@@ -13,6 +13,9 @@ class ErrorModel {
       errorMessage = error.message;
     } else if (error is PostgrestError) {
       errorMessage = error.message;
+
+    } else if (error is String) {
+      errorMessage = error;
     } else {
       errorMessage = ErrorConstants.unknownError;
     }
