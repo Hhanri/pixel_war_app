@@ -17,7 +17,9 @@ class PixelGridWidget extends HookWidget {
   Widget build(BuildContext context) {
     print("BUILDING PIXELGRIDWIDGET");
 
-    final TransformationController transformationController = useTransformationController();
+    final TransformationController transformationController = useTransformationController(
+      keys: const [Key("TRANSFORMATION CONTROLLER")]
+    );
     transformationController.value.scale(22.78095238095238);
     late final StreamController<List<Map<String, dynamic>>> streamController;
     streamController = useStreamController<List<Map<String, dynamic>>>(
@@ -26,25 +28,28 @@ class PixelGridWidget extends HookWidget {
       }
     );
 
-    return Center(
-      child: InteractiveViewer.builder(
-        minScale: 0.0001,
-        key: UniqueKey(),
-        maxScale: 30,
-        scaleEnabled: true,
-        boundaryMargin: EdgeInsets.zero,
-        transformationController: transformationController,
-        builder: (context, vector.Quad viewport) {
-          return StreamBuilder<List<Map<String, dynamic>>>(
-            stream: streamController.stream,//streamController.stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Column(
+    return InteractiveViewer.builder(
+      minScale: 10,
+      key: const Key("INTERACTIVE VIEWER"),
+      clipBehavior: Clip.hardEdge,
+      maxScale: 30,
+      scaleEnabled: true,
+      boundaryMargin: EdgeInsets.zero,
+      transformationController: transformationController,
+      builder: (context, vector.Quad viewport) {
+        return StreamBuilder<List<Map<String, dynamic>>>(
+          stream: streamController.stream,//streamController.stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return IntrinsicWidth(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     for (int row = 0; row < rowCount; row++)
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           for (int column = 0; column < columnCount; column++)
@@ -63,14 +68,14 @@ class PixelGridWidget extends HookWidget {
                         ],
                       )
                   ],
-                );
-              } else {
-                return const NoStateErrorScreen();
-              }
+                ),
+              );
+            } else {
+              return const NoStateErrorScreen();
             }
-          );
-        }
-      )
+          }
+        );
+      }
     );
   }
   vector.Quad cachedViewport = vector.Quad();
@@ -80,8 +85,8 @@ class PixelGridWidget extends HookWidget {
   int lastVisibleRow = 0;
   static const double cellWidth = PixelModel.pixelWidth;
   static const double cellHeight = PixelModel.pixelHeight;
-  static int rowCount = 10; //gridTest.length;
-  static int columnCount = 10; //gridTest[0].length;
+  static int rowCount = 9; //table length - 1
+  static int columnCount = 9; //table length - 1
   bool isCellVisible({required int row, required int column, required vector.Quad viewport}) {
     if (viewport != cachedViewport) {
       final Rect aabb = axisAlignedBoundingBox(viewport);
