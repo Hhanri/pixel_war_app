@@ -13,6 +13,19 @@ import '../helpers/helpers.dart';
 class PixelGridWidget extends HookWidget {
   PixelGridWidget({Key? key}) : super(key: key);
 
+  bool isCellVisible({required int row, required int column, required vector.Quad viewport}) {
+    if (viewport != cachedViewport) {
+      final Rect aabb = axisAlignedBoundingBox(viewport);
+      cachedViewport = viewport;
+      firstVisibleRow = (aabb.top / cellHeight).floor();
+      firstVisibleColumn = (aabb.left / cellWidth).floor();
+      lastVisibleRow = (aabb.bottom / cellHeight).floor();
+      lastVisibleColumn = (aabb.right / cellWidth).floor();
+      print("LAST COLUMN $lastVisibleColumn");
+    }
+    return row >= firstVisibleRow && row <= lastVisibleRow
+        && column >= firstVisibleColumn && column <= lastVisibleColumn;
+  }
   @override
   Widget build(BuildContext context) {
     print("BUILDING PIXELGRIDWIDGET");
@@ -38,27 +51,40 @@ class PixelGridWidget extends HookWidget {
       transformationController: transformationController,
       builder: (context, vector.Quad viewport) {
         return StreamBuilder<List<Map<String, dynamic>>>(
-          stream: streamController.stream,//streamController.stream,
+          stream: streamController.stream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+
+              List<List<PixelModel>> pixelList = [];
+              for (int i = 0; i < rowCount-1; i++) {
+                List<PixelModel> subList = [];
+                for (int j = 0; j < columnCount-1; j++) {
+                  subList.add(
+                    PixelModel(
+                      color: Color(int.parse(snapshot.data!.firstWhere((element) => element['row_n'] == i && element['column_n'] == j)['color'])),
+                      username: snapshot.data!.firstWhere((element) => element['row_n'] == i && element['column_n'] == j)['username']
+                    )
+                  );
+                }
+                pixelList.add(subList);
+              }
+
               return IntrinsicWidth(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    for (int row = 0; row < rowCount; row++)
+                    for (int row = 0; row < pixelList.length; row++)
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          for (int column = 0; column < columnCount; column++)
+                          for (int column = 0; column < pixelList.first.length; column++)
                             isCellVisible(row: row, column: column, viewport: viewport)
                               ? PixelWidget(
                                   key: ValueKey(snapshot.data!.firstWhere((element) => element['row_n'] == row && element['column_n'] == column)['id']),
-                                  pixelModel: PixelModel(
-                                  color: Color(int.parse(snapshot.data!.firstWhere((element) => element['row_n'] == row && element['column_n'] == column)['color'])),
-                                  username: snapshot.data!.firstWhere((element) => element['row_n'] == row && element['column_n'] == column)['username']),
+                                  pixelModel: pixelList[row][column],
                                   onTap: () {
                                     print("row: $row | col: $column");
                                     context.read<ServicesBloc>().add(PutPixelEvent(row: row, col: column, color: '0xFF5678DF'));
@@ -85,18 +111,7 @@ class PixelGridWidget extends HookWidget {
   int lastVisibleRow = 0;
   static const double cellWidth = PixelModel.pixelWidth;
   static const double cellHeight = PixelModel.pixelHeight;
-  static int rowCount = 9; //table length - 1
-  static int columnCount = 9; //table length - 1
-  bool isCellVisible({required int row, required int column, required vector.Quad viewport}) {
-    if (viewport != cachedViewport) {
-      final Rect aabb = axisAlignedBoundingBox(viewport);
-      cachedViewport = viewport;
-      firstVisibleRow = (aabb.top / cellHeight).floor();
-      firstVisibleColumn = (aabb.left / cellWidth).floor();
-      lastVisibleRow = (aabb.bottom / cellHeight).floor();
-      lastVisibleColumn = (aabb.right / cellWidth).floor();
-    }
-    return row >= firstVisibleRow && row <= lastVisibleRow
-        && column >= firstVisibleColumn && column <= lastVisibleColumn;
-  }
+  static int rowCount = 10; //table length - 1
+  static int columnCount = 10; //table length - 1
+
 }
